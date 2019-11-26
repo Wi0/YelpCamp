@@ -1,7 +1,7 @@
-const express = require("express");
-const app = express();
-const bodyParser = require("body-parser");
-const mongoose = require("mongoose");
+const express = require("express"),
+ 	app = express(), 
+	bodyParser = require("body-parser"),
+	mongoose = require("mongoose");
 
 mongoose.connect("mongodb+srv://Duncan:nHpkOWGGStso@webdev-cljuh.mongodb.net/test?retryWrites=true&w=majority", {
 	useNewUrlParser: true,
