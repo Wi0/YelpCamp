@@ -1,7 +1,12 @@
-const express = require("express"),
- 	app = express(), 
-	bodyParser = require("body-parser"),
-	mongoose = require("mongoose");
+const 	express = require("express"),
+		app = express(), 
+		bodyParser = require("body-parser"),
+		mongoose = require("mongoose"),
+		Campground = require("./models/campground"),
+		// Comments = require("./models/comments"),
+		// Users = require("./models/users");
+		seedDB = require("./seeds");
+
 
 mongoose.connect("mongodb+srv://Duncan:nHpkOWGGStso@webdev-cljuh.mongodb.net/test?retryWrites=true&w=majority", {
 	useNewUrlParser: true,
@@ -16,15 +21,8 @@ mongoose.connect("mongodb+srv://Duncan:nHpkOWGGStso@webdev-cljuh.mongodb.net/tes
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 
-//Schema setup
-var campgroundsSchema = new mongoose.Schema({
-	name: String,
-	image: String,
-	description: String
-});
+seedDB();    
 
-var Campground = mongoose.model("Campground", campgroundsSchema);
-    
 app.get("/", function(req, res){
     res.render("landing");
 });
@@ -64,7 +62,7 @@ app.get("/campgrounds/new", function(req, res){
 });
 
 app.get("/campgrounds/:id", function(req, res){
-	Campground.findById(req.params.id, function(err, foundCampground){
+	Campground.findById(req.params.id).populate("comments").exec(function(err, foundCampground){
 		if(err){
 			console.log(err);
 		} else {
