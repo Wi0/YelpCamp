@@ -4,6 +4,7 @@ const 	express = require("express"),
 		mongoose = require("mongoose"),
 	  	passport = require("passport"),
 	  	LocalStrategy = require("passport-local"),
+	  	methodOverride = require("method-override"),
 	  	passportLocalMongoose = require("passport-local-mongoose"),
 		Campground = require("./models/campground"),
 		Comment = require("./models/comment"),
@@ -28,6 +29,7 @@ mongoose.connect("mongodb+srv://Duncan:nHpkOWGGStso@webdev-cljuh.mongodb.net/tes
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"))
+app.use(methodOverride("_method"));
 
 //Delete all campgrounds and comments
 // seedDB();    
